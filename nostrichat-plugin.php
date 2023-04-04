@@ -42,17 +42,17 @@ function nostrichat_settings_page() {
             <?php do_settings_sections( 'nostrichat_options_group' ); ?>
             <table class="form-table">
                 <tr>
-                    <th scope="row"><label for="nostrichat_pubkey">Nostr Public Key (HEX)</label></th>
+                    <th scope="row"><label for="nostrichat_pubkey">Nostr Public Key (HEX)</label><p>Convert <a href="https://nostrcheck.me/converter/"target="_blank" rel="noreferrer">npub to HEX</a> </th>
                     <td><input type="text" id="nostrichat_pubkey" name="nostrichat_pubkey" value="<?php echo esc_attr($pubkey); ?>" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label></th>
-                    <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr($relays); ?>" /></td>
+                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p><a href="https://nostr.watch/relays/find#public"target="_blank" rel="noreferrer">Relay list</a></th>
+                        <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr(default_value($relays, 'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band')); ?>" /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
         </form>
-        <div class="usage">
+        <div class="nostrichat-usage">
             <h3>Basic usage</he>
             <p> To use this plugin, you must first configure your public key fields and the list of relays. </p>
             <p> Once these are filled in, you can simply use the following shortcode on any wordpress page: <code>[nostrichat]</code>.</p>
@@ -60,13 +60,14 @@ function nostrichat_settings_page() {
             <p>💡<i> If you add the shortcode without specifying this argument, the default chat type will be 'GLOBAL'.</i></p>
             <p>Example shortcode for dm: <code>[nostrichat chat-type="DM"]</code>.</p>
         </div>
-        <div class="donation">
+        <div class="nostrichat-donation">
             <h3>How to support</h3>
             <p>If you liked this plugin and found it valuable, please consider supporting the work of the developers.</p>
             <p>Gzuuus (Wordpress plugin) <a href="lightning:gzuuus@getalby.com">DONATE</a></p>
             <p>PABLOF7z (Nostrichat) <a href="lightning:pablof7z@ln.tips">DONATE</a></p>
             <h4>You can also contribute by developing this plugin, opening issues to fix bugs or suggest improvements, opening PRs to commit new changes, etc.</h4>
             <a href="https://github.com/gzuuus/nostrichat-plugin" target="_blank" rel="noreferrer">Github repo</a>
+        </div>
     </div>
     <?php
 }
