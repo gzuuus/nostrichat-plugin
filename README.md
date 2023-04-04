@@ -1,5 +1,5 @@
 # Description
-The Nostrichat plugin allows you to easily integrate Nostrichat into your WordPress site. With this plugin, you can add a live chat widget to your pages or posts, and allow site visitors to communicate with you in real time.
+The Nostrichat plugin allows you to easily integrate Nostrichat into your WordPress site. With this plugin, you can add a live chat widget to your pages or posts, and allow site visitors to communicate in real time. The shortcode will create a chat room based on the URL where it is inserted.
 
 ## Installation
 1. Download this repo or directly download the file "nostrichat-plugin.zip".

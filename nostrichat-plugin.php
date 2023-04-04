@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Nostrichat Plugin
-Description: This plugin inserts <a href="https://nostri.chat/" target="_blank" rel="noreferrer">Nostrichat</a> by <a href="https://snort.social/p/npub1l2vyh47mk2p0qlsku7hg0vn29faehy9hy34ygaclpn66ukqp3afqutajft"target="_blank" rel="noreferrer">PABLOF7z</a> in your posts or pages trought the shortcode [nostrichat].
+Description: This plugin inserts <a href="https://nostri.chat/" target="_blank" rel="noreferrer">Nostrichat</a> by <a href="https://snort.social/p/npub1l2vyh47mk2p0qlsku7hg0vn29faehy9hy34ygaclpn66ukqp3afqutajft"target="_blank" rel="noreferrer">PABLOF7z</a> in your posts or pages trought the shortcode [nostrichat]. The shortcode will create a chat room based on the URL where it is inserted.
 Version: 1.0
 Author: <a href="https://snort.social/p/npub1gzuushllat7pet0ccv9yuhygvc8ldeyhrgxuwg744dn5khnpk3gs3ea5ds" target="_blank" rel="noreferrer">@Gzuuus</a>
 */
