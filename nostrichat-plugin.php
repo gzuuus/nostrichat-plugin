@@ -46,7 +46,7 @@ function nostrichat_settings_page() {
                     <td><input type="text" id="nostrichat_pubkey" name="nostrichat_pubkey" value="<?php echo esc_attr($pubkey); ?>" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p>Default relay list: <code>'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band'</code></p><p>💡Setting your own relay list will override the default relay list.</p></th>
+                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p>Default relay list: <code>'wss://relay.f7z.io,wss://nos.lol,<br>wss://relay.nostr.info,wss://nostr-pub.wellorder.net,<br>wss://relay.current.fyi,wss://relay.nostr.band'</code></p><p>💡Setting your own relay list will override the default relay list.</p></th>
                     <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr(isset($relays) ? $relays : 'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band'); ?>" /></td>
                 </tr>
             </table>
@@ -54,7 +54,7 @@ function nostrichat_settings_page() {
         </form>
         <div class="nostrichat-usage">
             <h3>Basic usage</he>
-            <p> To use this plugin, you must first configure your public key fields and the list of relays. </p>
+            <p> To use this plugin, you must first configure your public key fields and the list of relays(optional). </p>
             <p> Once these are filled in, you can simply use the following shortcode on any wordpress page: <code>[nostrichat]</code>.</p>
             <p> You can also use the following argument within the shortcode to specify the chat type 'chat-type=" "', supported values are 'GLOBAL' and 'DM'.</p>
             <p>💡<i> If you add the shortcode without specifying this argument, the default chat type will be 'GLOBAL'.</i></p>
