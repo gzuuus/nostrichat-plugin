@@ -46,8 +46,8 @@ function nostrichat_settings_page() {
                     <td><input type="text" id="nostrichat_pubkey" name="nostrichat_pubkey" value="<?php echo esc_attr($pubkey); ?>" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p><a href="https://nostr.watch/relays/find#public"target="_blank" rel="noreferrer">Relay list</a></th>
-                        <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr(default_value($relays, 'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band')); ?>" /></td>
+                    <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p>Default relay list: <code>'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band'</code></p><p>💡Setting your own relay list will override the default relay list.</p></th>
+                    <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr(isset($relays) ? $relays : 'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band'); ?>" /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
