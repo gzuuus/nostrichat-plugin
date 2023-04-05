@@ -7,6 +7,6 @@ Initial version of the plugin
 
 = 1.1.0 =
 
-- Added the parameter 'chat-type' for use with the shortcode // @gzuuus
+- Added the parameter 'chat-tags' for use with the shortcode // @gzuuus
 - Added script & attributes through wp functions // @danielcharrua
 - Added 'Disable Anonymous button' in settings page // @gzuuus
