@@ -2,7 +2,7 @@
 /*
 Plugin Name: Nostrichat Plugin
 Description: This plugin inserts <a href="https://nostri.chat/" target="_blank" rel="noreferrer">Nostrichat</a> by <a href="https://snort.social/p/npub1l2vyh47mk2p0qlsku7hg0vn29faehy9hy34ygaclpn66ukqp3afqutajft"target="_blank" rel="noreferrer">PABLOF7z</a> in your posts or pages trought the shortcode [nostrichat]. The shortcode will create a chat room based on the URL where it is inserted.
-Version: 1.0
+Version: 1.1.0
 Author: <a href="https://snort.social/p/npub1gzuushllat7pet0ccv9yuhygvc8ldeyhrgxuwg744dn5khnpk3gs3ea5ds" target="_blank" rel="noreferrer">@Gzuuus</a>
 */
 
@@ -17,6 +17,10 @@ function insert_nostrichat_shortcode($atts) {
 
 	$shortcode = '<div id="nostrichat-widget"></div>';
 
+	if (get_option('nostrichat_disable_button') === 'on') {
+		$shortcode .= '	<style>.flex > button:nth-child(3) {display: none;}	</style>';
+	}
+
 	wp_enqueue_script( 'nostrichat', 'https://nostri.chat/public/bundle.js', array(), null, true );
 	wp_enqueue_style( 'nostrichat', 'https://nostri.chat/public/bundle.css' );
 
@@ -26,10 +30,8 @@ function insert_nostrichat_shortcode($atts) {
 			if ( 'nostrichat' !== $handle ) {
 				return $tag;
 			}
-
 			$pubkey = esc_attr(get_option('nostrichat_pubkey'));
 			$relays = esc_attr(get_option('nostrichat_relays'));
-
 			return str_replace(
 				' src',
 				' data-website-owner-pubkey="'.$pubkey.'" data-chat-type="'.$type.'" data-chat-tags="'.$tags.'" data-relays="'.$relays.'" src',
@@ -39,7 +41,6 @@ function insert_nostrichat_shortcode($atts) {
 		10,
 		2
 	);
-
 	return $shortcode;
 }
 add_shortcode( 'nostrichat', 'insert_nostrichat_shortcode' );
@@ -52,8 +53,8 @@ add_action( 'admin_menu', 'nostrichat_add_settings_page' );
 function nostrichat_settings_page() {
     $pubkey = get_option('nostrichat_pubkey');
     $relays = get_option('nostrichat_relays');
+    $disable_button = get_option('nostrichat_disable_button');
     ?>
-    
     <div class="wrap">
         <h1>Nostrichat Settings</h1>
         <form method="post" action="options.php">
@@ -66,7 +67,11 @@ function nostrichat_settings_page() {
                 </tr>
                 <tr>
                     <th scope="row"><label for="nostrichat_relays">Relays (can be a comma-separated list of relays)</label><p>Default relay list: <code>'wss://relay.f7z.io,wss://nos.lol,<br>wss://relay.nostr.info,wss://nostr-pub.wellorder.net,<br>wss://relay.current.fyi,wss://relay.nostr.band'</code></p><p>💡Setting your own relay list will override the default relay list.</p></th>
-                    <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr(isset($relays) ? $relays : 'wss://relay.f7z.io,wss://nos.lol,wss://relay.nostr.info,wss://nostr-pub.wellorder.net,wss://relay.current.fyi,wss://relay.nostr.band'); ?>" /></td>
+                    <td><input type="text" id="nostrichat_relays" name="nostrichat_relays" value="<?php echo esc_attr($relays); ?>" /></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="nostrichat_disable_button">Disable(hide) Anonymous(ephemeral keys) button</label></th>
+                    <td><input type="checkbox" id="nostrichat_disable_button" name="nostrichat_disable_button" <?php echo $disable_button ? 'checked' : ''; ?> /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
@@ -94,6 +99,7 @@ function nostrichat_settings_page() {
 function nostrichat_register_settings() {
     register_setting( 'nostrichat_options_group', 'nostrichat_pubkey' );
     register_setting( 'nostrichat_options_group', 'nostrichat_relays' );
+    register_setting( 'nostrichat_options_group', 'nostrichat_disable_button' );
 }
 add_action( 'admin_init', 'nostrichat_register_settings' );
 
