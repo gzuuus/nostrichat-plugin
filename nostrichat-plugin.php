@@ -10,18 +10,34 @@ function insert_nostrichat_shortcode($atts) {
     $atts = shortcode_atts( array(
         'chat-type' => 'GLOBAL',
     ), $atts );
-    $pubkey = get_option('nostrichat_pubkey');
-    $relays = get_option('nostrichat_relays');
-    $url = get_permalink();
-    $shortcode = '<script
-        src="https://nostri.chat/public/bundle.js"
-        data-website-owner-pubkey="' . esc_attr($pubkey) . '"
-        data-chat-type="' . esc_attr($atts['chat-type']) . '"
-        data-chat-tags="' . esc_attr($url) . '"
-        data-relays="' . esc_attr($relays) . '"
-        style="z-index: 99;"
-    ></script>
-    <link rel="stylesheet" href="https://nostri.chat/public/bundle.css">';
+	
+	$type   = esc_attr($atts['chat-type']);
+	 
+    $shortcode = '<div id="nostrichat-widget"></div>';
+	
+	wp_enqueue_script( 'nostrichat', 'https://nostri.chat/public/bundle.js', array(), null, true );
+    wp_enqueue_style( 'nostrichat', 'https://nostri.chat/public/bundle.css' );
+	
+	add_filter(
+		'script_loader_tag', 
+		function( $tag, $handle ) use ( $type ) {
+			if ( 'nostrichat' !== $handle )
+				return $tag;
+
+			$pubkey = esc_attr(get_option('nostrichat_pubkey'));
+			$relays = esc_attr(get_option('nostrichat_relays'));
+			$url    = esc_attr(get_permalink());
+
+			return str_replace( 
+				' src',
+				' data-website-owner-pubkey="'.$pubkey.'" data-chat-type="'.$type.'" data-chat-tags="'.$url.'" data-relays="'.$relays.'" src',
+				$tag
+			);
+		}, 
+		10, 
+		2
+	);
+	
     return $shortcode;
 }
 add_shortcode( 'nostrichat', 'insert_nostrichat_shortcode' );
@@ -35,6 +51,7 @@ function nostrichat_settings_page() {
     $pubkey = get_option('nostrichat_pubkey');
     $relays = get_option('nostrichat_relays');
     ?>
+    
     <div class="wrap">
         <h1>Nostrichat Settings</h1>
         <form method="post" action="options.php">
