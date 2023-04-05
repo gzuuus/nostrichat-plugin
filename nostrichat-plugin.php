@@ -7,38 +7,40 @@ Author: <a href="https://snort.social/p/npub1gzuushllat7pet0ccv9yuhygvc8ldeyhrgx
 */
 
 function insert_nostrichat_shortcode($atts) {
-    $atts = shortcode_atts( array(
-        'chat-type' => 'GLOBAL',
-    ), $atts );
-	
-	$type   = esc_attr($atts['chat-type']);
-	 
-    $shortcode = '<div id="nostrichat-widget"></div>';
-	
+	$atts = shortcode_atts( array(
+		'chat-type' => 'GLOBAL',
+		'chat-tags' => get_permalink(),
+	), $atts );
+
+	$type = esc_attr($atts['chat-type']);
+	$tags = esc_attr($atts['chat-tags']);
+
+	$shortcode = '<div id="nostrichat-widget"></div>';
+
 	wp_enqueue_script( 'nostrichat', 'https://nostri.chat/public/bundle.js', array(), null, true );
-    wp_enqueue_style( 'nostrichat', 'https://nostri.chat/public/bundle.css' );
-	
+	wp_enqueue_style( 'nostrichat', 'https://nostri.chat/public/bundle.css' );
+
 	add_filter(
-		'script_loader_tag', 
-		function( $tag, $handle ) use ( $type ) {
-			if ( 'nostrichat' !== $handle )
+		'script_loader_tag',
+		function( $tag, $handle ) use ( $type, $tags ) {
+			if ( 'nostrichat' !== $handle ) {
 				return $tag;
+			}
 
 			$pubkey = esc_attr(get_option('nostrichat_pubkey'));
 			$relays = esc_attr(get_option('nostrichat_relays'));
-			$url    = esc_attr(get_permalink());
 
-			return str_replace( 
+			return str_replace(
 				' src',
-				' data-website-owner-pubkey="'.$pubkey.'" data-chat-type="'.$type.'" data-chat-tags="'.$url.'" data-relays="'.$relays.'" src',
+				' data-website-owner-pubkey="'.$pubkey.'" data-chat-type="'.$type.'" data-chat-tags="'.$tags.'" data-relays="'.$relays.'" src',
 				$tag
 			);
-		}, 
-		10, 
+		},
+		10,
 		2
 	);
-	
-    return $shortcode;
+
+	return $shortcode;
 }
 add_shortcode( 'nostrichat', 'insert_nostrichat_shortcode' );
 
